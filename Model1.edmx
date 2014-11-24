@@ -1,0 +1,550 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="prodeoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Mails">
+          <Key>
+            <PropertyRef Name="idMail" />
+          </Key>
+          <Property Name="idMail" Type="int" Nullable="false" />
+          <Property Name="idProyecto" Type="int" />
+          <Property Name="idModulo" Type="int" />
+          <Property Name="idTarea" Type="int" />
+          <Property Name="asunto" Type="nvarchar(max)" />
+          <Property Name="detalle" Type="nvarchar(max)" />
+          <Property Name="destinatarios" Type="varchar(max)" />
+          <Property Name="enviado" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Modulos">
+          <Key>
+            <PropertyRef Name="idModulo" />
+          </Key>
+          <Property Name="idModulo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idProyecto" Type="int" Nullable="false" />
+          <Property Name="idUsuarioCreador" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="FechaFinalizacion" Type="datetime" />
+          <Property Name="FechaVencimiento" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Participantes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" Nullable="false" />
+          <Property Name="PermisosAdministrador" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParticipantesProyectos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" Nullable="false" />
+          <Property Name="idProyecto" Type="int" Nullable="false" />
+          <Property Name="permisosAdministrador" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="ParticipantesTareas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" Nullable="false" />
+          <Property Name="idTarea" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Proyectos">
+          <Key>
+            <PropertyRef Name="idProyecto" />
+          </Key>
+          <Property Name="idProyecto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="FechaVencimiento" Type="datetime" Nullable="false" />
+          <Property Name="FechaFinalizacion" Type="datetime" />
+          <Property Name="AlertaPrevia" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tareas">
+          <Key>
+            <PropertyRef Name="idTarea" />
+          </Key>
+          <Property Name="idTarea" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idModulo" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="FechaVencimiento" Type="datetime" Nullable="false" />
+          <Property Name="FechaFinalizacion" Type="datetime" />
+          <Property Name="AlertaPrevia" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="DireccionGPS" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Prioridad" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Comentario" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tiempo" Type="float" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="mail" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="usuarioActivo" Type="bit" Nullable="false" />
+          <Property Name="codigoVerificacion" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Modulos_Proyectos">
+          <End Role="Proyectos" Type="Self.Proyectos" Multiplicity="1" />
+          <End Role="Modulos" Type="Self.Modulos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proyectos">
+              <PropertyRef Name="idProyecto" />
+            </Principal>
+            <Dependent Role="Modulos">
+              <PropertyRef Name="idProyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Modulos_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Modulos" Type="Self.Modulos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Modulos">
+              <PropertyRef Name="idUsuarioCreador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_participantes_usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Participantes" Type="Self.Participantes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Participantes">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParticipantesProyectos_Proyectos">
+          <End Role="Proyectos" Type="Self.Proyectos" Multiplicity="1" />
+          <End Role="ParticipantesProyectos" Type="Self.ParticipantesProyectos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proyectos">
+              <PropertyRef Name="idProyecto" />
+            </Principal>
+            <Dependent Role="ParticipantesProyectos">
+              <PropertyRef Name="idProyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParticipantesTareas_Tareas">
+          <End Role="Tareas" Type="Self.Tareas" Multiplicity="1" />
+          <End Role="ParticipantesTareas" Type="Self.ParticipantesTareas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tareas">
+              <PropertyRef Name="idTarea" />
+            </Principal>
+            <Dependent Role="ParticipantesTareas">
+              <PropertyRef Name="idTarea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tareas_Modulos">
+          <End Role="Modulos" Type="Self.Modulos" Multiplicity="1" />
+          <End Role="Tareas" Type="Self.Tareas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulos">
+              <PropertyRef Name="idModulo" />
+            </Principal>
+            <Dependent Role="Tareas">
+              <PropertyRef Name="idModulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="prodeoModelStoreContainer">
+          <EntitySet Name="Mails" EntityType="Self.Mails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modulos" EntityType="Self.Modulos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Participantes" EntityType="Self.Participantes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParticipantesProyectos" EntityType="Self.ParticipantesProyectos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParticipantesTareas" EntityType="Self.ParticipantesTareas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proyectos" EntityType="Self.Proyectos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tareas" EntityType="Self.Tareas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Modulos_Proyectos" Association="Self.FK_Modulos_Proyectos">
+            <End Role="Proyectos" EntitySet="Proyectos" />
+            <End Role="Modulos" EntitySet="Modulos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Modulos_Usuarios" Association="Self.FK_Modulos_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Modulos" EntitySet="Modulos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_participantes_usuarios" Association="Self.FK_participantes_usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Participantes" EntitySet="Participantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParticipantesProyectos_Proyectos" Association="Self.FK_ParticipantesProyectos_Proyectos">
+            <End Role="Proyectos" EntitySet="Proyectos" />
+            <End Role="ParticipantesProyectos" EntitySet="ParticipantesProyectos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParticipantesTareas_Tareas" Association="Self.FK_ParticipantesTareas_Tareas">
+            <End Role="Tareas" EntitySet="Tareas" />
+            <End Role="ParticipantesTareas" EntitySet="ParticipantesTareas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tareas_Modulos" Association="Self.FK_Tareas_Modulos">
+            <End Role="Modulos" EntitySet="Modulos" />
+            <End Role="Tareas" EntitySet="Tareas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="prodeoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Modulos">
+          <Key>
+            <PropertyRef Name="idModulo" />
+          </Key>
+          <Property Name="idModulo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idProyecto" Type="Int32" Nullable="false" />
+          <Property Name="idUsuarioCreador" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaFinalizacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaVencimiento" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Proyectos" Relationship="Self.FK_Modulos_Proyectos" FromRole="Modulos" ToRole="Proyectos" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Modulos_Usuarios" FromRole="Modulos" ToRole="Usuarios" />
+          <NavigationProperty Name="Tareas" Relationship="Self.FK_Tareas_Modulos" FromRole="Modulos" ToRole="Tareas" />
+        </EntityType>
+        <EntityType Name="Participantes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" Nullable="false" />
+          <Property Name="PermisosAdministrador" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_participantes_usuarios" FromRole="Participantes" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="ParticipantesProyectos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" Nullable="false" />
+          <Property Name="idProyecto" Type="Int32" Nullable="false" />
+          <Property Name="permisosAdministrador" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Proyectos" Relationship="Self.FK_ParticipantesProyectos_Proyectos" FromRole="ParticipantesProyectos" ToRole="Proyectos" />
+        </EntityType>
+        <EntityType Name="ParticipantesTareas">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="idUsuario" Type="Int32" Nullable="false" />
+          <Property Name="idTarea" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tareas" Relationship="Self.FK_ParticipantesTareas_Tareas" FromRole="ParticipantesTareas" ToRole="Tareas" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Proyectos">
+          <Key>
+            <PropertyRef Name="idProyecto" />
+          </Key>
+          <Property Name="idProyecto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaVencimiento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaFinalizacion" Type="DateTime" Precision="3" />
+          <Property Name="AlertaPrevia" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Modulos" Relationship="Self.FK_Modulos_Proyectos" FromRole="Proyectos" ToRole="Modulos" />
+          <NavigationProperty Name="ParticipantesProyectos" Relationship="Self.FK_ParticipantesProyectos_Proyectos" FromRole="Proyectos" ToRole="ParticipantesProyectos" />
+        </EntityType>
+        <EntityType Name="Tareas">
+          <Key>
+            <PropertyRef Name="idTarea" />
+          </Key>
+          <Property Name="idTarea" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idModulo" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaVencimiento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaFinalizacion" Type="DateTime" Precision="3" />
+          <Property Name="AlertaPrevia" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DireccionGPS" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Prioridad" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Comentario" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tiempo" Type="Double" />
+          <NavigationProperty Name="Modulos" Relationship="Self.FK_Tareas_Modulos" FromRole="Tareas" ToRole="Modulos" />
+          <NavigationProperty Name="ParticipantesTareas" Relationship="Self.FK_ParticipantesTareas_Tareas" FromRole="Tareas" ToRole="ParticipantesTareas" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Modulos" Relationship="Self.FK_Modulos_Usuarios" FromRole="Usuarios" ToRole="Modulos" />
+          <NavigationProperty Name="Participantes" Relationship="Self.FK_participantes_usuarios" FromRole="Usuarios" ToRole="Participantes" />
+          <Property Name="usuarioActivo" Type="Boolean" Nullable="false" />
+          <Property Name="codigoVerificacion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Modulos_Proyectos">
+          <End Role="Proyectos" Type="Self.Proyectos" Multiplicity="1" />
+          <End Role="Modulos" Type="Self.Modulos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proyectos">
+              <PropertyRef Name="idProyecto" />
+            </Principal>
+            <Dependent Role="Modulos">
+              <PropertyRef Name="idProyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Modulos_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Modulos" Type="Self.Modulos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Modulos">
+              <PropertyRef Name="idUsuarioCreador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tareas_Modulos">
+          <End Role="Modulos" Type="Self.Modulos" Multiplicity="1" />
+          <End Role="Tareas" Type="Self.Tareas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulos">
+              <PropertyRef Name="idModulo" />
+            </Principal>
+            <Dependent Role="Tareas">
+              <PropertyRef Name="idModulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_participantes_usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Participantes" Type="Self.Participantes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Participantes">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParticipantesProyectos_Proyectos">
+          <End Role="Proyectos" Type="Self.Proyectos" Multiplicity="1" />
+          <End Role="ParticipantesProyectos" Type="Self.ParticipantesProyectos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proyectos">
+              <PropertyRef Name="idProyecto" />
+            </Principal>
+            <Dependent Role="ParticipantesProyectos">
+              <PropertyRef Name="idProyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParticipantesTareas_Tareas">
+          <End Role="Tareas" Type="Self.Tareas" Multiplicity="1" />
+          <End Role="ParticipantesTareas" Type="Self.ParticipantesTareas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tareas">
+              <PropertyRef Name="idTarea" />
+            </Principal>
+            <Dependent Role="ParticipantesTareas">
+              <PropertyRef Name="idTarea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="prodeoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Modulos" EntityType="Self.Modulos" />
+          <EntitySet Name="Participantes" EntityType="Self.Participantes" />
+          <EntitySet Name="ParticipantesProyectos" EntityType="Self.ParticipantesProyectos" />
+          <EntitySet Name="ParticipantesTareas" EntityType="Self.ParticipantesTareas" />
+          <EntitySet Name="Proyectos" EntityType="Self.Proyectos" />
+          <EntitySet Name="Tareas" EntityType="Self.Tareas" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <AssociationSet Name="FK_Modulos_Proyectos" Association="Self.FK_Modulos_Proyectos">
+            <End Role="Proyectos" EntitySet="Proyectos" />
+            <End Role="Modulos" EntitySet="Modulos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Modulos_Usuarios" Association="Self.FK_Modulos_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Modulos" EntitySet="Modulos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tareas_Modulos" Association="Self.FK_Tareas_Modulos">
+            <End Role="Modulos" EntitySet="Modulos" />
+            <End Role="Tareas" EntitySet="Tareas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_participantes_usuarios" Association="Self.FK_participantes_usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Participantes" EntitySet="Participantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParticipantesProyectos_Proyectos" Association="Self.FK_ParticipantesProyectos_Proyectos">
+            <End Role="Proyectos" EntitySet="Proyectos" />
+            <End Role="ParticipantesProyectos" EntitySet="ParticipantesProyectos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParticipantesTareas_Tareas" Association="Self.FK_ParticipantesTareas_Tareas">
+            <End Role="Tareas" EntitySet="Tareas" />
+            <End Role="ParticipantesTareas" EntitySet="ParticipantesTareas" />
+          </AssociationSet>
+          <EntitySet Name="Mails" EntityType="prodeoModel.Mails" />
+        </EntityContainer>
+        <EntityType Name="Mails">
+          <Key>
+            <PropertyRef Name="idMail" />
+          </Key>
+          <Property Name="idMail" Type="Int32" Nullable="false" />
+          <Property Name="asunto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="detalle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="destinatarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="enviado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="idProyecto" Type="Int32" />
+          <Property Name="idModulo" Type="Int32" />
+          <Property Name="idTarea" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="prodeoModelStoreContainer" CdmEntityContainer="prodeoEntities">
+          <EntitySetMapping Name="Modulos">
+            <EntityTypeMapping TypeName="prodeoModel.Modulos">
+              <MappingFragment StoreEntitySet="Modulos">
+                <ScalarProperty Name="idModulo" ColumnName="idModulo" />
+                <ScalarProperty Name="idProyecto" ColumnName="idProyecto" />
+                <ScalarProperty Name="idUsuarioCreador" ColumnName="idUsuarioCreador" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaFinalizacion" ColumnName="FechaFinalizacion" />
+                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Participantes">
+            <EntityTypeMapping TypeName="prodeoModel.Participantes">
+              <MappingFragment StoreEntitySet="Participantes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="PermisosAdministrador" ColumnName="PermisosAdministrador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParticipantesProyectos">
+            <EntityTypeMapping TypeName="prodeoModel.ParticipantesProyectos">
+              <MappingFragment StoreEntitySet="ParticipantesProyectos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="idProyecto" ColumnName="idProyecto" />
+                <ScalarProperty Name="permisosAdministrador" ColumnName="permisosAdministrador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParticipantesTareas">
+            <EntityTypeMapping TypeName="prodeoModel.ParticipantesTareas">
+              <MappingFragment StoreEntitySet="ParticipantesTareas">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="idTarea" ColumnName="idTarea" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proyectos">
+            <EntityTypeMapping TypeName="prodeoModel.Proyectos">
+              <MappingFragment StoreEntitySet="Proyectos">
+                <ScalarProperty Name="idProyecto" ColumnName="idProyecto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+                <ScalarProperty Name="FechaFinalizacion" ColumnName="FechaFinalizacion" />
+                <ScalarProperty Name="AlertaPrevia" ColumnName="AlertaPrevia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tareas">
+            <EntityTypeMapping TypeName="prodeoModel.Tareas">
+              <MappingFragment StoreEntitySet="Tareas">
+                <ScalarProperty Name="idTarea" ColumnName="idTarea" />
+                <ScalarProperty Name="idModulo" ColumnName="idModulo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+                <ScalarProperty Name="FechaFinalizacion" ColumnName="FechaFinalizacion" />
+                <ScalarProperty Name="AlertaPrevia" ColumnName="AlertaPrevia" />
+                <ScalarProperty Name="DireccionGPS" ColumnName="DireccionGPS" />
+                <ScalarProperty Name="Prioridad" ColumnName="Prioridad" />
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Tiempo" ColumnName="Tiempo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="prodeoModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="codigoVerificacion" ColumnName="codigoVerificacion" />
+                <ScalarProperty Name="usuarioActivo" ColumnName="usuarioActivo" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mails">
+            <EntityTypeMapping TypeName="prodeoModel.Mails">
+              <MappingFragment StoreEntitySet="Mails">
+                <ScalarProperty Name="idTarea" ColumnName="idTarea" />
+                <ScalarProperty Name="idModulo" ColumnName="idModulo" />
+                <ScalarProperty Name="idProyecto" ColumnName="idProyecto" />
+                <ScalarProperty Name="enviado" ColumnName="enviado" />
+                <ScalarProperty Name="destinatarios" ColumnName="destinatarios" />
+                <ScalarProperty Name="detalle" ColumnName="detalle" />
+                <ScalarProperty Name="asunto" ColumnName="asunto" />
+                <ScalarProperty Name="idMail" ColumnName="idMail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

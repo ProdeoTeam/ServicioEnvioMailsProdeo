@@ -1,0 +1,1 @@
+C:\Proyectos\ServicioEnvioMailsProdeo\ServicioEnvioMailsProdeo\ServicioEnvioMailsProdeo\bin\Debug\ServicioEnvioMailsProdeo.exe.config
