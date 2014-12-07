@@ -5,20 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="28b1e4da692a4d98a7f1ee666f5d8bd7" Name="Diagram1">
-        <EntityTypeShape EntityType="prodeoModel.Modulos" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="prodeoModel.Participantes" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="prodeoModel.ParticipantesProyectos" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="prodeoModel.ParticipantesTareas" Width="1.5" PointX="7.5" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="prodeoModel.Proyectos" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="prodeoModel.Tareas" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="prodeoModel.Usuarios" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <AssociationConnector Association="prodeoModel.FK_Modulos_Proyectos" ManuallyRouted="false" />
-        <AssociationConnector Association="prodeoModel.FK_Modulos_Usuarios" ManuallyRouted="false" />
-        <AssociationConnector Association="prodeoModel.FK_Tareas_Modulos" ManuallyRouted="false" />
-        <AssociationConnector Association="prodeoModel.FK_participantes_usuarios" ManuallyRouted="false" />
-        <AssociationConnector Association="prodeoModel.FK_ParticipantesProyectos_Proyectos" ManuallyRouted="false" />
-        <AssociationConnector Association="prodeoModel.FK_ParticipantesTareas_Tareas" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="prodeoModel.Mails" Width="1.5" PointX="5.375" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="prodeoModel.Mails" Width="1.5" PointX="5.75" PointY="8.5" />
+        <EntityTypeShape EntityType="prodeoModel.Modulos" Width="1.5" PointX="3" PointY="4.5" />
+        <EntityTypeShape EntityType="prodeoModel.Participantes" Width="1.5" PointX="3" PointY="1.25" />
+        <EntityTypeShape EntityType="prodeoModel.ParticipantesProyectos" Width="1.5" PointX="3" PointY="9.125" />
+        <EntityTypeShape EntityType="prodeoModel.ParticipantesTareas" Width="1.5" PointX="7.5" PointY="5.125" />
+        <EntityTypeShape EntityType="prodeoModel.Proyectos" Width="1.5" PointX="0.75" PointY="4.625" />
+        <EntityTypeShape EntityType="prodeoModel.Tareas" Width="1.5" PointX="5.25" PointY="4.125" />
+        <EntityTypeShape EntityType="prodeoModel.Usuarios" Width="1.5" PointX="0.75" PointY="0.75" />
+        <AssociationConnector Association="prodeoModel.FK_Modulos_Proyectos" />
+        <AssociationConnector Association="prodeoModel.FK_Modulos_Usuarios" />
+        <AssociationConnector Association="prodeoModel.FK_Tareas_Modulos" />
+        <AssociationConnector Association="prodeoModel.FK_participantes_usuarios" />
+        <AssociationConnector Association="prodeoModel.FK_ParticipantesProyectos_Proyectos" />
+        <AssociationConnector Association="prodeoModel.FK_ParticipantesTareas_Tareas" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

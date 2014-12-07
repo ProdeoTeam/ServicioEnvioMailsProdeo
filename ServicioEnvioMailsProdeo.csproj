@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccesoDatos.cs" />
+    <Compile Include="Auxiliar.cs" />
     <Compile Include="EnvioMailService.cs" />
     <Compile Include="Mails.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -83,6 +84,7 @@
     <Compile Include="ParticipantesTareas.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProcesoEnvioMails.cs" />
     <Compile Include="Proyectos.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

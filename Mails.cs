@@ -15,12 +15,12 @@ namespace ServicioEnvioMailsProdeo
     public partial class Mails
     {
         public int idMail { get; set; }
+        public Nullable<int> idProyecto { get; set; }
+        public Nullable<int> idModulo { get; set; }
+        public Nullable<int> idTarea { get; set; }
         public string asunto { get; set; }
         public string detalle { get; set; }
         public string destinatarios { get; set; }
         public string enviado { get; set; }
-        public Nullable<int> idProyecto { get; set; }
-        public Nullable<int> idModulo { get; set; }
-        public Nullable<int> idTarea { get; set; }
     }
 }

@@ -14,9 +14,9 @@ namespace ServicioEnvioMailsProdeo
     
     public partial class ParticipantesTareas
     {
+        public int id { get; set; }
         public int idUsuario { get; set; }
         public int idTarea { get; set; }
-        public int id { get; set; }
     
         public virtual Tareas Tareas { get; set; }
     }

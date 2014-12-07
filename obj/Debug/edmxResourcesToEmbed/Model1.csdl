@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="prodeoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="prodeoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Mails" EntityType="prodeoModel.Mails" />
+    <EntitySet Name="Modulos" EntityType="prodeoModel.Modulos" />
+    <EntitySet Name="Participantes" EntityType="prodeoModel.Participantes" />
+    <EntitySet Name="ParticipantesProyectos" EntityType="prodeoModel.ParticipantesProyectos" />
+    <EntitySet Name="ParticipantesTareas" EntityType="prodeoModel.ParticipantesTareas" />
+    <EntitySet Name="Proyectos" EntityType="prodeoModel.Proyectos" />
+    <EntitySet Name="Tareas" EntityType="prodeoModel.Tareas" />
+    <EntitySet Name="Usuarios" EntityType="prodeoModel.Usuarios" />
+    <AssociationSet Name="FK_Modulos_Proyectos" Association="prodeoModel.FK_Modulos_Proyectos">
+      <End Role="Proyectos" EntitySet="Proyectos" />
+      <End Role="Modulos" EntitySet="Modulos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Modulos_Usuarios" Association="prodeoModel.FK_Modulos_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Modulos" EntitySet="Modulos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tareas_Modulos" Association="prodeoModel.FK_Tareas_Modulos">
+      <End Role="Modulos" EntitySet="Modulos" />
+      <End Role="Tareas" EntitySet="Tareas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_participantes_usuarios" Association="prodeoModel.FK_participantes_usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Participantes" EntitySet="Participantes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ParticipantesProyectos_Proyectos" Association="prodeoModel.FK_ParticipantesProyectos_Proyectos">
+      <End Role="Proyectos" EntitySet="Proyectos" />
+      <End Role="ParticipantesProyectos" EntitySet="ParticipantesProyectos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ParticipantesTareas_Tareas" Association="prodeoModel.FK_ParticipantesTareas_Tareas">
+      <End Role="Tareas" EntitySet="Tareas" />
+      <End Role="ParticipantesTareas" EntitySet="ParticipantesTareas" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Mails">
+    <Key>
+      <PropertyRef Name="idMail" />
+    </Key>
+    <Property Name="idMail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idProyecto" Type="Int32" />
+    <Property Name="idModulo" Type="Int32" />
+    <Property Name="idTarea" Type="Int32" />
+    <Property Name="asunto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="detalle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="destinatarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="enviado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Modulos">
+    <Key>
+      <PropertyRef Name="idModulo" />
+    </Key>
+    <Property Name="idModulo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idProyecto" Type="Int32" Nullable="false" />
+    <Property Name="idUsuarioCreador" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FechaFinalizacion" Type="DateTime" Precision="3" />
+    <Property Name="FechaVencimiento" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Proyectos" Relationship="prodeoModel.FK_Modulos_Proyectos" FromRole="Modulos" ToRole="Proyectos" />
+    <NavigationProperty Name="Usuarios" Relationship="prodeoModel.FK_Modulos_Usuarios" FromRole="Modulos" ToRole="Usuarios" />
+    <NavigationProperty Name="Tareas" Relationship="prodeoModel.FK_Tareas_Modulos" FromRole="Modulos" ToRole="Tareas" />
+  </EntityType>
+  <EntityType Name="Participantes">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idUsuario" Type="Int32" Nullable="false" />
+    <Property Name="PermisosAdministrador" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Usuarios" Relationship="prodeoModel.FK_participantes_usuarios" FromRole="Participantes" ToRole="Usuarios" />
+  </EntityType>
+  <EntityType Name="ParticipantesProyectos">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idUsuario" Type="Int32" Nullable="false" />
+    <Property Name="idProyecto" Type="Int32" Nullable="false" />
+    <Property Name="permisosAdministrador" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Proyectos" Relationship="prodeoModel.FK_ParticipantesProyectos_Proyectos" FromRole="ParticipantesProyectos" ToRole="Proyectos" />
+  </EntityType>
+  <EntityType Name="ParticipantesTareas">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idUsuario" Type="Int32" Nullable="false" />
+    <Property Name="idTarea" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Tareas" Relationship="prodeoModel.FK_ParticipantesTareas_Tareas" FromRole="ParticipantesTareas" ToRole="Tareas" />
+  </EntityType>
+  <EntityType Name="Proyectos">
+    <Key>
+      <PropertyRef Name="idProyecto" />
+    </Key>
+    <Property Name="idProyecto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FechaVencimiento" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FechaFinalizacion" Type="DateTime" Precision="3" />
+    <Property Name="AlertaPrevia" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Modulos" Relationship="prodeoModel.FK_Modulos_Proyectos" FromRole="Proyectos" ToRole="Modulos" />
+    <NavigationProperty Name="ParticipantesProyectos" Relationship="prodeoModel.FK_ParticipantesProyectos_Proyectos" FromRole="Proyectos" ToRole="ParticipantesProyectos" />
+  </EntityType>
+  <EntityType Name="Tareas">
+    <Key>
+      <PropertyRef Name="idTarea" />
+    </Key>
+    <Property Name="idTarea" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idModulo" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FechaVencimiento" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FechaFinalizacion" Type="DateTime" Precision="3" />
+    <Property Name="AlertaPrevia" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="DireccionGPS" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Prioridad" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Comentario" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Tiempo" Type="Double" />
+    <NavigationProperty Name="Modulos" Relationship="prodeoModel.FK_Tareas_Modulos" FromRole="Tareas" ToRole="Modulos" />
+    <NavigationProperty Name="ParticipantesTareas" Relationship="prodeoModel.FK_ParticipantesTareas_Tareas" FromRole="Tareas" ToRole="ParticipantesTareas" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="idUsuario" />
+    </Key>
+    <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="mail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="usuarioActivo" Type="Boolean" Nullable="false" />
+    <Property Name="codigoVerificacion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Modulos" Relationship="prodeoModel.FK_Modulos_Usuarios" FromRole="Usuarios" ToRole="Modulos" />
+    <NavigationProperty Name="Participantes" Relationship="prodeoModel.FK_participantes_usuarios" FromRole="Usuarios" ToRole="Participantes" />
+  </EntityType>
+  <Association Name="FK_Modulos_Proyectos">
+    <End Type="prodeoModel.Proyectos" Role="Proyectos" Multiplicity="1" />
+    <End Type="prodeoModel.Modulos" Role="Modulos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proyectos">
+        <PropertyRef Name="idProyecto" />
+      </Principal>
+      <Dependent Role="Modulos">
+        <PropertyRef Name="idProyecto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Modulos_Usuarios">
+    <End Type="prodeoModel.Usuarios" Role="Usuarios" Multiplicity="1" />
+    <End Type="prodeoModel.Modulos" Role="Modulos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="idUsuario" />
+      </Principal>
+      <Dependent Role="Modulos">
+        <PropertyRef Name="idUsuarioCreador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tareas_Modulos">
+    <End Type="prodeoModel.Modulos" Role="Modulos" Multiplicity="1" />
+    <End Type="prodeoModel.Tareas" Role="Tareas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Modulos">
+        <PropertyRef Name="idModulo" />
+      </Principal>
+      <Dependent Role="Tareas">
+        <PropertyRef Name="idModulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_participantes_usuarios">
+    <End Type="prodeoModel.Usuarios" Role="Usuarios" Multiplicity="1" />
+    <End Type="prodeoModel.Participantes" Role="Participantes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="idUsuario" />
+      </Principal>
+      <Dependent Role="Participantes">
+        <PropertyRef Name="idUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ParticipantesProyectos_Proyectos">
+    <End Type="prodeoModel.Proyectos" Role="Proyectos" Multiplicity="1" />
+    <End Type="prodeoModel.ParticipantesProyectos" Role="ParticipantesProyectos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proyectos">
+        <PropertyRef Name="idProyecto" />
+      </Principal>
+      <Dependent Role="ParticipantesProyectos">
+        <PropertyRef Name="idProyecto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ParticipantesTareas_Tareas">
+    <End Type="prodeoModel.Tareas" Role="Tareas" Multiplicity="1" />
+    <End Type="prodeoModel.ParticipantesTareas" Role="ParticipantesTareas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tareas">
+        <PropertyRef Name="idTarea" />
+      </Principal>
+      <Dependent Role="ParticipantesTareas">
+        <PropertyRef Name="idTarea" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
