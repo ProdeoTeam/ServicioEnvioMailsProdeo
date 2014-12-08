@@ -72,8 +72,7 @@ namespace ServicioEnvioMailsProdeo
 
             return listaDeTareas;
         }
-
-
+        
         public string obtenerMailDeUsuario(int idUsuario) 
         {
             string mail;
@@ -83,7 +82,7 @@ namespace ServicioEnvioMailsProdeo
             {
                 mail = (from u in prodeoContext.Usuarios
                                 where u.idUsuario == idUsuario
-                                select u.mail).ToString(); 
+                                select u.mail).First(); 
             }
             catch (Exception)
             {
@@ -125,6 +124,23 @@ namespace ServicioEnvioMailsProdeo
                 modulo = new Modulos();
             }
             return modulo;
+        }
+
+        public int insertarMail(Mails mail)
+        {
+            try
+            {
+                prodeoEntities prodeoContext = new prodeoEntities();
+                
+                prodeoContext.Mails.Add(mail);
+                prodeoContext.SaveChanges();
+                return 1;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+
         }
 
     }

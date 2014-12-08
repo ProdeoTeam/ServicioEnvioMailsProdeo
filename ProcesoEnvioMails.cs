@@ -55,6 +55,7 @@ namespace ServicioEnvioMailsProdeo
         private Mails CrearMailParaProyecto(Proyectos proy)
         {
             Mails mail = new Mails();
+            AccesoDatos datos = new AccesoDatos();
             try
             {
                 //-------------------------------
@@ -101,6 +102,8 @@ namespace ServicioEnvioMailsProdeo
                                 
                 //-------------------------------
 
+                //Insertamos el mail
+                datos.insertarMail(mail);
             }
             catch (Exception)
             {
