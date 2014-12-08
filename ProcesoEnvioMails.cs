@@ -30,6 +30,7 @@ namespace ServicioEnvioMailsProdeo
                 foreach (Proyectos unProyecto in listaDeProyectos)
                 {
                     this.CrearMailParaProyecto(unProyecto);
+                    datos.blanquearAlertaProyecto(unProyecto.idProyecto);
                 }
                 //---------------------------------------------------------
                 // Creamos los mail para Tareas
@@ -38,6 +39,7 @@ namespace ServicioEnvioMailsProdeo
                 foreach (Tareas unaTarea in listaDeTareas)
                 {
                     this.CrearMailParaTarea(unaTarea);
+                    datos.blanquearAlertaTarea(unaTarea.idTarea);
                 }
                 //---------------------------------------------------------
 
@@ -200,6 +202,7 @@ namespace ServicioEnvioMailsProdeo
                 foreach (Mails unMail in listaDeMails)
                 {
                     envioMails.enviarMail(unMail);
+                    datos.marcarMailEnviado(unMail.idMail);
                 }
             }
             catch (Exception)

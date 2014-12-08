@@ -143,5 +143,44 @@ namespace ServicioEnvioMailsProdeo
 
         }
 
+        public int blanquearAlertaProyecto(int idProyecto)
+        {
+            prodeoEntities prodeoContext = new prodeoEntities();
+            var proyecto = (from p in prodeoContext.Proyectos
+                          where p.idProyecto == idProyecto
+                          select p).First();
+
+            proyecto.AlertaPrevia = "h-0";
+            
+            prodeoContext.SaveChanges();
+            return 1;
+        }
+
+        public int blanquearAlertaTarea(int idTarea)
+        {
+            prodeoEntities prodeoContext = new prodeoEntities();
+            var tarea = (from t in prodeoContext.Tareas
+                            where t.idTarea == idTarea
+                            select t).First();
+
+            tarea.AlertaPrevia = "h-0";
+
+            prodeoContext.SaveChanges();
+            return 1;
+        }
+
+        public int marcarMailEnviado(int idMail)
+        {
+            prodeoEntities prodeoContext = new prodeoEntities();
+            var mail = (from p in prodeoContext.Mails
+                            where p.idMail == idMail
+                            select p).First();
+
+            mail.enviado = "E";
+
+            prodeoContext.SaveChanges();
+            return 1;
+        }
+
     }
 }
